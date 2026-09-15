@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feature Flags — Noodle Noodle</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header id="topbar">
+  <div class="brand">🍜 Noodle&nbsp;Noodle <span class="sub">student canteen · KTH campus</span></div>
+  <div id="hero" class="hero hero-A"><span id="hero-text">Fresh noodles, cooked daily</span><span id="hero-chip" class="chip-ab">variant A</span></div>
+  <div class="conn"><span class="dot"></span> flags served by localhost</div>
+</header>
+
+<main>
+  <!-- ── the app ─────────────────────────────────────────────── -->
+  <section id="app" class="panel">
+    <h2>Order food</h2>
+    <div id="menu"></div>
+
+    <div id="cart" class="cart old">
+      <div class="cart-head">
+        <span id="cart-title">Your cart</span>
+        <span id="cart-badge" class="beta-badge" hidden>NEW CART · beta</span>
+      </div>
+      <div id="cart-items"><p class="empty">Nothing yet — add a bowl.</p></div>
+      <div class="cart-total"><span>Total</span><span id="total">0 kr</span></div>
+      <button id="checkout-btn" class="checkout normal">Place order</button>
+    </div>
+
+    <div id="banner" class="banner" hidden></div>
+    <div id="toast" class="toast" hidden></div>
+  </section>
+
+  <!-- ── ops console ─────────────────────────────────────────── -->
+  <aside id="console" class="panel">
+    <div class="console-head">⚑ Feature flag console <span class="mini">— the server owns these</span></div>
+
+    <div class="flag-row">
+      <div class="flag-label"><b>theme-dark</b><span class="kind">on/off</span></div>
+      <label class="switch"><input type="checkbox" id="sw-theme"><span></span></label>
+    </div>
+
+    <div class="flag-row col">
+      <div class="flag-label"><b>new-cart</b><span class="kind">percentage rollout</span><span id="pct-badge" class="pct">0%</span></div>
+      <input type="range" id="slider" min="0" max="100" step="5" value="0">
+    </div>
+
+    <div class="flag-row">
+      <div class="flag-label"><b>express-checkout</b><span class="kind">on/off · shipped this morning</span></div>
+      <label class="switch danger"><input type="checkbox" id="sw-express" checked><span></span></label>
+    </div>
+
+    <div class="board-head">
+      <b>Traffic monitor</b>
+      <span class="lens">
+        <button id="lens-ab" class="lens-btn on">A/B test</button>
+        <button id="lens-roll" class="lens-btn">Rollout</button>
+      </span>
+    </div>
+    <div id="board"></div>
+    <div class="board-foot">
+      <button id="simulate" class="sim">🪙 Simulate new visitor</button>
+      <span id="board-stats" class="stats"></span>
+    </div>
+
+    <div class="log-head">Audit log</div>
+    <ul id="log" class="log"><li class="muted">no flag changes yet</li></ul>
+  </aside>
+</main>
+
+<!-- ── the money strip ─────────────────────────────────────── -->
+<footer id="codestrip">
+  <div class="code">
+    <span class="kw">if</span> (<span class="fn">flags.isEnabledFor</span>(<span class="str">'new-cart'</span>, you)) { renderNewCart(); } <span class="kw">else</span> { renderOldCart(); }
+  </div>
+  <div class="meta">
+    <span>code deployed <b id="deploy-time">—</b></span>
+    <span class="sep">·</span>
+    <span>redeploys <b id="redeploys">0</b></span>
+    <span class="sep">·</span>
+    <span>flag flips <b id="flips">0</b></span>
+  </div>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>
